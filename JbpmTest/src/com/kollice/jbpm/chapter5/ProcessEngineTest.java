@@ -1,8 +1,13 @@
 package com.kollice.jbpm.chapter5;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jbpm.api.Execution;
 import org.jbpm.api.ExecutionService;
 import org.jbpm.api.HistoryService;
 import org.jbpm.api.ManagementService;
+import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.RepositoryService;
 import org.jbpm.api.TaskService;
 import org.jbpm.test.JbpmTestCase;
@@ -12,7 +17,7 @@ import org.junit.Test;
 
 public class ProcessEngineTest extends JbpmTestCase {
 	private String deploymentId;
-	private static final String PATH = "";
+	private static final String PATH = "com/kollice/jbpm/chapter5/MyProcess.jpdl.xml";
 
 	@Before
 	protected void setUp() throws Exception {
@@ -43,16 +48,16 @@ public class ProcessEngineTest extends JbpmTestCase {
 		assertNotNull(historyService);
 		assertNotNull(managementService);
 
-		String deploymentId = repositoryService
-				.createDeployment()
-				.addResourceFromClasspath(
-						"com/kollice/jbpm/chapter5/MyProcess.jpdl.xml")
-				.deploy();
-		
-		
+		Map parMap = new HashMap();
+		parMap.put("key1", "value1");
+		parMap.put("key2", "value2");
+		ProcessInstance processInstance = executionService
+				.startProcessInstanceByKey("kollice", parMap, "baijy0001");
+		String pidString = processInstance.getId();
 
-		repositoryService.deleteDeployment(deploymentId);
-
+		Execution execution = processInstance.findActiveExecutionIn("state1");
+		executionService.signalExecutionById(execution.getId());
+		
+		assertNotNull(repositoryService);
 	}
-
 }
