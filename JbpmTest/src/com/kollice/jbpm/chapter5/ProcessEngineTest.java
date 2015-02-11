@@ -52,16 +52,20 @@ public class ProcessEngineTest extends JbpmTestCase {
 		assertNotNull(historyService);
 		assertNotNull(managementService);
 
+		// 指定流程变量
 		Map parMap = new HashMap();
 		parMap.put("key1", "value1");
 		parMap.put("key2", "value2");
+		// 根据流程定义和业务单id以及流程变量发起一个流程实例
 		ProcessInstance processInstance = executionService
 				.startProcessInstanceByKey("kollice", parMap, "baijy0001");
 		String pidString = processInstance.getId();
 
+		// 唤醒state
 		Execution execution = processInstance.findActiveExecutionIn("state1");
 		executionService.signalExecutionById(execution.getId());
 
+		// 历史服务
 		List<HistoryProcessInstance> historyProcessInstances = historyService
 				.createHistoryProcessInstanceQuery()
 				.processDefinitionId("kollice-1")
@@ -70,6 +74,11 @@ public class ProcessEngineTest extends JbpmTestCase {
 		List<HistoryActivityInstance> historyActivityInstances = historyService
 				.createHistoryActivityInstanceQuery()
 				.processDefinitionId("kollice-1").activityName("state1").list();
+
+		// 查询服务
+		List<ProcessInstance> processInstances = executionService
+				.createProcessInstanceQuery().processDefinitionId("kollice-1")
+				.notSuspended().page(1, 10).list();
 
 		assertNotNull(repositoryService);
 	}
