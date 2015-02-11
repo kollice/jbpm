@@ -1,6 +1,7 @@
 package com.kollice.jbpm.chapter5;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jbpm.api.Execution;
@@ -10,6 +11,9 @@ import org.jbpm.api.ManagementService;
 import org.jbpm.api.ProcessInstance;
 import org.jbpm.api.RepositoryService;
 import org.jbpm.api.TaskService;
+import org.jbpm.api.history.HistoryActivityInstance;
+import org.jbpm.api.history.HistoryProcessInstance;
+import org.jbpm.api.history.HistoryProcessInstanceQuery;
 import org.jbpm.test.JbpmTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -57,7 +61,16 @@ public class ProcessEngineTest extends JbpmTestCase {
 
 		Execution execution = processInstance.findActiveExecutionIn("state1");
 		executionService.signalExecutionById(execution.getId());
-		
+
+		List<HistoryProcessInstance> historyProcessInstances = historyService
+				.createHistoryProcessInstanceQuery()
+				.processDefinitionId("kollice-1")
+				.orderDesc(HistoryProcessInstanceQuery.PROPERTY_STARTTIME)
+				.list();
+		List<HistoryActivityInstance> historyActivityInstances = historyService
+				.createHistoryActivityInstanceQuery()
+				.processDefinitionId("kollice-1").activityName("state1").list();
+
 		assertNotNull(repositoryService);
 	}
 }
