@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="ConditionDicision" xmlns="http://jbpm.org/4.4/jpdl">
+   <start name="start1" g="55,176,48,48">
+      <transition name="to exclusive1" to="exclusive1" g="-79,-22"/>
+   </start>
+   <decision name="exclusive1" g="158,175,48,48">
+      <transition name="to submit" to="submit" g="182,112:-60,-22">
+      	<condition expr="#{content=='good'}"/>
+      </transition>
+      <transition name="to try again" to="try again" g="-72,-22">
+      	<condition expr="#{content=='bad'}"/>
+      </transition>
+      <transition name="to give up" to="give up" g="182,283:-64,-22"/>
+   </decision>
+   <state name="submit" g="301,85,92,52"/>
+   <state name="try again" g="300,174,92,52"/>
+   <state name="give up" g="300,256,92,52"/>
+</process>
