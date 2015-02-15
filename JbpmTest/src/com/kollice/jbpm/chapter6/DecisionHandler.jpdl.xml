@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="DecisionHandler" xmlns="http://jbpm.org/4.4/jpdl">
+   <start name="start1" g="73,143,48,48">
+      <transition name="to exclusive1" to="exclusive1" g="-79,-22"/>
+   </start>
+   <decision name="exclusive1" g="166,144,48,48" >
+   	  <handler class="com.kollice.jbpm.chapter6.MyDecisionHandler"></handler>
+      <transition name="good" to="submit" g="193,76:-56,-22"/>
+      <transition name="bad" to="try again" g="-56,-22"/>
+      <transition name="ugly" to="give up" g="190,246:-56,-22"/>
+   </decision>
+   <state name="submit" g="310,46,92,52"/>
+   <state name="try again" g="312,135,92,52"/>
+   <state name="give up" g="314,215,92,52"/>
+</process>
