@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="DecisionExpression" xmlns="http://jbpm.org/4.4/jpdl">
+   <start name="start1" g="98,198,48,48">
+      <transition name="to exclusive1" to="exclusive1" g="-79,-22"/>
+   </start>
+   <state name="submit" g="324,96,92,52"/>
+   <state name="try again" g="325,185,92,52"/>
+   <state name="give up" g="324,275,92,52"/>
+   <decision name="exclusive1" g="199,198,48,48"  expr="#{content}">
+      <transition name="good" to="submit" g="222,127:-60,-22"/>
+      <transition name="bad" to="try again" g="-72,-22"/>
+      <transition name="ugly" to="give up" g="223,303:-64,-22"/>
+   </decision>
+</process>
