@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="EndTest" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="115,172,48,48" name="start1">
+      <transition g="-112,-22" name="to get return code" to="get return code"/>
+   </start>
+   <end g="424,98,48,48" name="end1"/>
+   <end-cancel g="423,172,48,48" name="cancel1"/>
+   <end-error g="426,236,48,48" name="error1"/>
+   <state g="226,169,92,52" name="get return code">
+      <transition g="271,121:-50,-22" name="200" to="end1"/>
+      <transition g="-64,-22" name="400" to="cancel1"/>
+      <transition g="271,259:-58,-22" name="500" to="error1"/>
+   </state>
+</process>
