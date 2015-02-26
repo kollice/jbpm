@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="ForkJoin" xmlns="http://jbpm.org/4.4/jpdl">
+   <start name="start1" g="33,166,48,48">
+      <transition name="to fork1" to="fork1" g="-52,-22"/>
+   </start>
+   <fork name="fork1" g="134,165,48,48">
+      <transition name="to send invoice" to="send invoice" g="158,98:-93,-22"/>
+      <transition name="to load trunk" to="load trunk" g="-81,-22"/>
+      <transition name="to print doc" to="print doc" g="158,291:-74,-22"/>
+   </fork>
+   <state name="send invoice" g="222,72,92,52">
+      <transition name="to join2" to="join2" g="524,98:-49,-22"/>
+   </state>
+   <state name="load trunk" g="226,164,92,52">
+      <transition name="to join1" to="join1" g="364,189:-49,-22"/>
+   </state>
+   <state name="print doc" g="221,265,92,52">
+      <transition name="to join1" to="join1" g="364,290:-49,-22"/>
+   </state>
+   <state name="drive truck to destination" g="415,218,92,52">
+      <transition name="to join2" to="join2" g="525,243:-49,-22"/>
+   </state>
+   <join name="join1" g="340,219,48,48">
+      <transition name="to drive truck to destination" to="drive truck to destination" g="-167,-22"/>
+   </join>
+   <join name="join2" g="501,127,48,48">
+      <transition name="to end1" to="end1" g="-50,-22"/>
+   </join>
+   <end name="end1" g="590,128,48,48"/>
+</process>
